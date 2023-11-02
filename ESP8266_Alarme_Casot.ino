@@ -18,7 +18,13 @@ message remonté DesActivation Alarme n'affiche pas RX433, c'est ok à l'activat
 */
 
 /*
-	01/11/2023 pas encore testé
+	02/11/2023 testé OK
+	WiFiManager V2.0.16-rc.2
+	parametrage WiFiManager timeout et retry
+	Compilation esp8266:esp8266:huzzah,default,80MHz,4M(3M SPIFFS) ESP8266 2.5.2
+  Arduino IDE 1.8.19 : 424256 40%, 38044 46% sur PC
+	
+	01/11/2023 testé OK
 	ajouté WiFiManager
 	Compilation esp8266:esp8266:huzzah,default,80MHz,4M(3M SPIFFS) ESP8266 2.5.2
   Arduino IDE 1.8.19 : 391140 37%, 40940 49% sur PC
@@ -184,7 +190,8 @@ void setup() {
   /* Uncomment for testing wifi manager */
   // wifiManager.resetSettings();
   wifiManager.setAPCallback(configModeCallback);
-
+	wifiManager.setConfigPortalTimeout(120); // sets timeout before AP,webserver loop ends and exits
+  wifiManager.setConnectRetries(10);       // sets number of retries for autoconnect
   /* or use this for auto generated name ESP + ChipID */
   if (!wifiManager.autoConnect()) {
     Serial.println(F("failed to connect and hit timeout"));
